@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>-1</x>
-      <y>0</y>
+      <y>10</y>
       <width>801</width>
-      <height>551</height>
+      <height>541</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -32,6 +32,18 @@
      </property>
      <item row="0" column="0">
       <widget class="QPushButton" name="pushButton">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>100</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>100</height>
+        </size>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -46,6 +58,19 @@
         <size>
          <width>20</width>
          <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="1">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
         </size>
        </property>
       </spacer>

@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/icons">
         <file>more.png</file>
+        <file>powerOff.png</file>
+        <file>powerOn.png</file>
     </qresource>
 </RCC>

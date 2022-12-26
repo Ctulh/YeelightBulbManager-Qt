@@ -41,7 +41,7 @@ else()
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(SmartHouseManager
-            ${PROJECT_SOURCES}
+            ${PROJECT_SOURCES} ${PROJECT_SOURCE_DIR}/icons/icons.qrc
         )
     endif()
 endif()

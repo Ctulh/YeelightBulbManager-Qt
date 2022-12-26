@@ -5,8 +5,12 @@
 
 SettingsButton::SettingsButton(QWidget *parent): QToolButton(parent) {
     const QSize bulbSettingsSize(50,50);
-    QPixmap pixmap("/home/ctuh/SmartHouseManager/icons/more.png");
+    QPixmap pixmap(":/icons/more.png");
     QIcon ButtonIcon(pixmap);
+
+
+    this->setStyleSheet("QToolButton::menu-indicator { image: none; }"
+                        "QToolButton{border: none; outline: none;}");
 
     QAction* settingsAction = new QAction("Settings");
     QAction* removeAction = new QAction("Remove");

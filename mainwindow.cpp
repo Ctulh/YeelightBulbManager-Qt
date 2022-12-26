@@ -10,6 +10,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //this->setStyleSheet("background-color: qlineargradient( x1:0 y1:0, x2:0 y2:5, stop:0 #bcd6d2, stop:1 #f0f0f0);");
+
+    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0, 1000));
+    linearGrad.setColorAt(0, "#bcd6d2");
+    linearGrad.setColorAt(1, "#f0f0f0");
+    QBrush brush(linearGrad);
+
+    QPalette pal = this->palette();
+    pal.setBrush(QPalette::Window, brush);
+    this->setPalette(pal);
 }
 
 MainWindow::~MainWindow()
