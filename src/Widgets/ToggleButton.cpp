@@ -8,7 +8,7 @@ ToggleButton::ToggleButton(QWidget *parent): QPushButton(parent) {
 
     this->setStyleSheet("border: none; outline: none;");
     this->setIcon(buttonIcon);
-    this->setIconSize(QSize(25, 25));
+    this->setIconSize(QSize(25, 25));  
     this->setFixedSize(bulbSize);
 
     //QRect rect(this->x(), this->y(), this->x() + this->width(),this->y() + this->height());

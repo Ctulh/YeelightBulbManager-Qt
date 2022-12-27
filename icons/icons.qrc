@@ -3,5 +3,6 @@
         <file>more.png</file>
         <file>powerOff.png</file>
         <file>powerOn.png</file>
+        <file>add.png</file>
     </qresource>
 </RCC>

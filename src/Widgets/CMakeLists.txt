@@ -5,12 +5,14 @@ set(INCLUDE_PATH ${PROJECT_SOURCE_DIR}/include/Widgets)
 set(HEADERS ${INCLUDE_PATH}/SettingsButton.hpp
             ${INCLUDE_PATH}/DeviceWidget.hpp
             ${INCLUDE_PATH}/DeviceButton.hpp
-            ${INCLUDE_PATH}/ToggleButton.hpp)
+            ${INCLUDE_PATH}/ToggleButton.hpp
+            ${INCLUDE_PATH}/FlowLayout.hpp)
 
 set(SOURCES SettingsButton.cpp
             DeviceWidget.cpp
             DeviceButton.cpp
-            ToggleButton.cpp)
+            ToggleButton.cpp
+            FlowLayout.cpp)
 
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
