@@ -6,21 +6,16 @@
 #include <QStackedLayout>
 
 DeviceWidget::DeviceWidget(QWidget *parent): QWidget(parent) {
-     static int frameNumber = 0;
+    static int frameNumber = 0;
 
-     this->setStyleSheet("border:none");
+    this->setStyleSheet("border:none");
+    this->setMinimumSize(QSize(200, 100));
 
     this->setObjectName((std::string("Frame_")+std::to_string(frameNumber++)).data());
-    this->setMinimumSize(QSize(100, 50));
-    this->setMaximumSize(QSize(200, 100));
 
 
-    auto layout = new QStackedLayout;
+    auto deviceButton = new DeviceButton(this);
+    auto toggleButton = new ToggleButton(this);
 
-    auto deviceButton = new DeviceButton();
-    layout->addWidget(deviceButton);
-    this->setLayout(layout);
-
-    //auto bulbButton = new ToggleButton(this);
-    //bulbButton->move(QPoint(200 - bulbButton->width() -5, 100 - bulbButton->height() - 5));
+    toggleButton->move(QPoint(200 - toggleButton->width() -5, 100 - toggleButton->height() - 5));
 }

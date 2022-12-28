@@ -1,0 +1,11 @@
+QPushButton{
+        background: rgba(250,252,252,255); 
+        outline: none;
+        border-radius: 15px;
+        border-style: outset;
+        min-height: 100px;
+        min-width: 200px;
+}
+QPushButton:hover {
+        background-color:#e3e3e3;
+}

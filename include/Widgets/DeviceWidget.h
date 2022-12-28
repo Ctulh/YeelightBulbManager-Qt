@@ -1,4 +1,0 @@
-#ifndef DEVICEWIDGET_H
-#define DEVICEWIDGET_H
-
-#endif // DEVICEWIDGET_H

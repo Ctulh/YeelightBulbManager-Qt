@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/styles">
+        <file>DeviceButton.css</file>
+        <file>AddDeviceButton.css</file>
+        <file>ToggleButton.css</file>
+    </qresource>
+</RCC>

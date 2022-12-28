@@ -42,6 +42,7 @@ else()
     else()
         add_executable(SmartHouseManager
             ${PROJECT_SOURCES} ${PROJECT_SOURCE_DIR}/icons/icons.qrc
+                               ${PROJECT_SOURCE_DIR}/styles/styles.qrc
         )
     endif()
 endif()
