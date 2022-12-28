@@ -3,5 +3,6 @@
         <file>DeviceButton.css</file>
         <file>AddDeviceButton.css</file>
         <file>ToggleButton.css</file>
+        <file>MainWindow.css</file>
     </qresource>
 </RCC>

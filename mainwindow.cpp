@@ -5,6 +5,7 @@
 #include "./ui_mainwindow.h"
 #include "Widgets/DeviceWidget.hpp"
 #include "Widgets/FlowLayout.hpp"
+#include <FileReader/FileReader.hpp>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,33 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
       m_addDeviceButton(new QToolButton(this))
 {
     ui->setupUi(this);
-    QLinearGradient linearGrad(QPointF(0, 0), QPointF(0, 1000));
-    linearGrad.setColorAt(0, "#bcd6d2");
-    linearGrad.setColorAt(1, "#f0f0f0");
-    QBrush brush(linearGrad);
+    this->setStyleSheet(FileReader::getFileData(":/styles/MainWindow.css").c_str());
 
-    QPalette pal = this->palette();
-    pal.setBrush(QPalette::Window, brush);
-    this->setPalette(pal);
-
-   // ui->gridLayout->setAlignment({Qt::AlignLeft, Qt::AlignTop});
-
-
-    QAction* addDeviceAction = new QAction("Add");
+    QAction* addDeviceAction = new QAction("Add"); // TODO separete to class AddDeviceButton
     QAction* scanDeviceAction = new QAction("Scan");
 
-
-    m_addDeviceButton->setStyleSheet(
-    "QToolButton{"
-                "icon: url(:/icons/add.png);"
-    "background: rgba(250,252,252,255); "
-    "outline: none;"
-    "border-radius: 15px;"
-    "border-style: outset;}"
-    "QToolButton:hover {"
-            "background-color:#e3e3e3;"
-        "}");
-
+    m_addDeviceButton->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceButton.css").c_str());
 
     m_addDeviceButton->setMinimumSize(200,100);
     m_addDeviceButton->addAction(addDeviceAction);
@@ -52,8 +32,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_layout->addWidget(m_addDeviceButton);
 
     ui->centralwidget->setLayout(m_layout);
-
-    //ui->gridLayout->
 
 }
 
@@ -75,25 +53,12 @@ void MainWindow::onClick(bool)
     m_addDeviceButton->showMenu();
 }
 
-//
 
 void MainWindow::onTriggered(QAction *arg1)
 {
     if(arg1->text() == "Add") {
         auto deviceWidget = new DeviceWidget();
-
-
-        static int column = 1;
-        static int row = 0;
-
-       // ui->gridLayout->addWidget(deviceWidget, row, column++);
-
         m_layout->addWidget(deviceWidget);
-
-        if(column%4 == 0) {
-           column = 0;
-           row++;
-        }
     }
 
 }

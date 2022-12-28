@@ -1,0 +1,13 @@
+QToolButton{
+    qproperty-icon: url('/home/ctuh/SmartHouseManager/icons/add.png');
+    qproperty-iconSize: 70px;
+    background-size: contain;
+    background: rgba(250,252,252,255); 
+    outline: none;
+    border-radius: 15px;
+    border-style: outset;
+}
+QToolButton::menu-indicator { image: none; }
+QToolButton:hover { 
+    background-color:#e3e3e3;
+}
