@@ -132,6 +132,12 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
             return y + lineHeight - rect.y() + bottom;
         }
 
+void FlowLayout::insertWidget(int pos, QWidget *w) {
+     addChildWidget(w);
+     QWidgetItem *item = new QWidgetItem(w);
+     itemList.insert(pos, item);
+}
+
 int FlowLayout::smartSpacing(QStyle::PixelMetric pm) const
 {
     QObject *parent = this->parent();

@@ -24,11 +24,12 @@ public:
     QSize minimumSize() const override;
     void setGeometry(const QRect &rect) override;
     QSize sizeHint() const override;
-    QLayoutItem *takeAt(int index) override;
+    QLayoutItem *takeAt(int index) override;   
+    void insertWidget(int pos, QWidget* w);
 
 private:
-    int doLayout(const QRect &rect, bool testOnly) const;
     int smartSpacing(QStyle::PixelMetric pm) const;
+    int doLayout(const QRect &rect, bool testOnly) const;
 
     QList<QLayoutItem *> itemList;
     int m_hSpace;

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QToolButton>
 #include "Widgets/FlowLayout.hpp"
+#include <QMap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,9 +24,12 @@ public slots:
     void onClick(bool);
     void onTriggered(QAction*);
 
-
+public:
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 private:
     FlowLayout* m_layout;
+    QMap <QString, QWidget*> m_widgets;
     QToolButton* m_addDeviceButton;
     Ui::MainWindow *ui;
 };

@@ -4,8 +4,11 @@
 #include "ToggleButton.hpp"
 #include <QPushButton>
 #include <QStackedLayout>
+#include <QDrag>
+#include <iostream>
+#include <QMimeData>
 
-DeviceWidget::DeviceWidget(QWidget *parent): QWidget(parent) {
+DeviceWidget::DeviceWidget(QWidget *parent, int number): QWidget(parent), m_number(number) {
     static int frameNumber = 0;
 
     this->setStyleSheet("border:none");
@@ -18,4 +21,25 @@ DeviceWidget::DeviceWidget(QWidget *parent): QWidget(parent) {
     auto toggleButton = new ToggleButton(this);
 
     toggleButton->move(QPoint(200 - toggleButton->width() -5, 100 - toggleButton->height() - 5));
+}
+
+
+void DeviceWidget::mousePressEvent(QMouseEvent* event) {
+
+}
+
+void DeviceWidget::mouseMoveEvent(QMouseEvent* event) {
+    if(event->buttons() == Qt::LeftButton) {
+        auto drag = new QDrag(this);
+        auto mime = new QMimeData;
+
+        mime->setText(QString::number(m_number));
+        drag->setMimeData(mime);
+
+        auto dropAction = drag->exec(Qt::MoveAction);
+    }
+}
+
+void DeviceWidget::mouseReleaseEvent(QMouseEvent* event) {
+
 }
