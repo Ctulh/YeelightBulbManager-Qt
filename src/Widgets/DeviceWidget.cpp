@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QStackedLayout>
 #include <QDrag>
-#include <iostream>
+#include <QCursor>
 #include <QMimeData>
 
 DeviceWidget::DeviceWidget(QWidget *parent, int number): QWidget(parent), m_number(number) {
@@ -14,7 +14,7 @@ DeviceWidget::DeviceWidget(QWidget *parent, int number): QWidget(parent), m_numb
     this->setStyleSheet("border:none");
     this->setMinimumSize(QSize(200, 100));
 
-    this->setObjectName((std::string("Frame_")+std::to_string(frameNumber++)).data());
+    //this->setObjectName((std::string("Frame_")+std::to_string(frameNumber++)).data());
 
 
     auto deviceButton = new DeviceButton(this);
@@ -30,6 +30,7 @@ void DeviceWidget::mousePressEvent(QMouseEvent* event) {
 
 void DeviceWidget::mouseMoveEvent(QMouseEvent* event) {
     if(event->buttons() == Qt::LeftButton) {
+        this->setCursor(Qt::ClosedHandCursor);
         auto drag = new QDrag(this);
         auto mime = new QMimeData;
 
@@ -37,7 +38,9 @@ void DeviceWidget::mouseMoveEvent(QMouseEvent* event) {
         drag->setMimeData(mime);
 
         auto dropAction = drag->exec(Qt::MoveAction);
+        this->setCursor(Qt::ArrowCursor);
     }
+
 }
 
 void DeviceWidget::mouseReleaseEvent(QMouseEvent* event) {

@@ -6,13 +6,17 @@ set(HEADERS ${INCLUDE_PATH}/SettingsButton.hpp
             ${INCLUDE_PATH}/DeviceWidget.hpp
             ${INCLUDE_PATH}/DeviceButton.hpp
             ${INCLUDE_PATH}/ToggleButton.hpp
-            ${INCLUDE_PATH}/FlowLayout.hpp)
+            ${INCLUDE_PATH}/FlowLayout.hpp
+            ${INCLUDE_PATH}/AddDeviceButton.hpp
+            ${INCLUDE_PATH}/AuthWidget.hpp)
 
 set(SOURCES SettingsButton.cpp
             DeviceWidget.cpp
             DeviceButton.cpp
             ToggleButton.cpp
-            FlowLayout.cpp)
+            FlowLayout.cpp
+            AddDeviceButton.cpp
+            AuthWidget.cpp)
 
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)

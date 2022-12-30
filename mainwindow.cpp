@@ -7,33 +7,34 @@
 #include "Widgets/FlowLayout.hpp"
 #include <QMimeData>
 #include <FileReader/FileReader.hpp>
+#include "Widgets/AddDeviceButton.hpp"
+#include "Widgets/AuthWidget.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow),
-      m_addDeviceButton(new QToolButton(this))
+    , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->setStyleSheet(FileReader::getFileData(":/styles/MainWindow.css").c_str());
 
 
-    QAction* addDeviceAction = new QAction("Add"); // TODO separete to class AddDeviceButton
+    auto addDeviceButton = new AddDeviceButton(this);
+
+
+    QAction* addDeviceAction = new QAction("Add");
+    connect(addDeviceAction, &QAction::triggered, this, &MainWindow::addDevice);
+    addDeviceButton->addAction(addDeviceAction);
+
     QAction* scanDeviceAction = new QAction("Scan");
-    QAction* deleteLast = new QAction("DeleteLast");
+    addDeviceButton->addAction(scanDeviceAction);
 
-    m_addDeviceButton->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceButton.css").c_str());
-
-    m_addDeviceButton->setMinimumSize(200,100);
-    m_addDeviceButton->addAction(addDeviceAction);
-    m_addDeviceButton->addAction(scanDeviceAction);
-    m_addDeviceButton->addAction(deleteLast);
-
-    connect(m_addDeviceButton, SIGNAL(clicked(bool)),this, SLOT(onClick(bool)));
-    connect(m_addDeviceButton, SIGNAL(triggered(QAction*)),this, SLOT(onTriggered(QAction*)));
+    QAction* deleteLastAction = new QAction("DeleteLast");
+    connect(deleteLastAction, &QAction::triggered, this, &MainWindow::deleteLastDevice);
+    addDeviceButton->addAction(deleteLastAction);
 
 
     m_layout = new FlowLayout;
-    m_layout->addWidget(m_addDeviceButton);
+    m_layout->addWidget(addDeviceButton);
 
 
     setAcceptDrops(true);
@@ -48,6 +49,38 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::addDevice() {
+    static int number = 0;
+    auto authWidget = new AuthWidget(this);
+
+    //m_layout->addItem(authWidget);
+
+
+
+    int x = (width() - authWidget->width()) / 2;
+    int y = (height() - authWidget->height()) / 2;
+
+    //std::cerr << "width: " << width() << " height: " << height() << '\n';
+    //std::cerr << "width: " << authWidget->width() << " height: " << authWidget->height() << '\n';
+
+    authWidget->move(QPoint(x, y));
+
+    authWidget->show();
+
+    //auto it = m_widgets.insert(QString::number(number),new DeviceWidget(nullptr, number));
+    //m_layout->addWidget(it.value());
+    //number++;
+}
+
+
+void MainWindow::deleteLastDevice() {
+    auto widget = m_widgets[m_widgets.lastKey()];
+
+    m_widgets.remove(m_widgets.lastKey());
+    m_layout->removeWidget(widget);
+
+    delete widget;
+}
 
 void MainWindow::on_MainWindow_iconSizeChanged(const QSize &iconSize)
 {
@@ -55,29 +88,7 @@ void MainWindow::on_MainWindow_iconSizeChanged(const QSize &iconSize)
 }
 
 
-void MainWindow::onClick(bool)
-{
-    m_addDeviceButton->showMenu();
-}
 
-
-void MainWindow::onTriggered(QAction *arg1)
-{
-    if(arg1->text() == "Add") {
-        static int number = 0;
-        auto it = m_widgets.insert(QString::number(number),new DeviceWidget(nullptr, number));
-        m_layout->addWidget(it.value());
-        number++;
-    }
-    else if (arg1->text() == "DeleteLast") {
-        auto widget = m_widgets[m_widgets.lastKey()];
-
-        m_widgets.remove(m_widgets.lastKey());
-        m_layout->removeWidget(widget);
-
-        delete widget;
-    }
-}
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
     event->accept();
@@ -87,7 +98,6 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
 void MainWindow::dropEvent(QDropEvent *event) {
     auto widgetToMove = m_widgets[event->mimeData()->text()];
     m_layout->removeWidget(widgetToMove);
-    //auto widgets = m_layout->getWidgetsList();
 
 
     auto oneElementWidth = 200 + m_layout->horizontalSpacing();

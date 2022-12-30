@@ -4,5 +4,6 @@
         <file>AddDeviceButton.css</file>
         <file>ToggleButton.css</file>
         <file>MainWindow.css</file>
+        <file>AuthWidget.css</file>
     </qresource>
 </RCC>

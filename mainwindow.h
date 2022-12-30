@@ -19,18 +19,19 @@ public:
     ~MainWindow();
 
 public slots:
-
     void on_MainWindow_iconSizeChanged(const QSize &iconSize);
-    void onClick(bool);
-    void onTriggered(QAction*);
 
 public:
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dropEvent(QDropEvent *event) override;
+
+private:
+    void addDevice();
+    void deleteLastDevice();
+
 private:
     FlowLayout* m_layout;
     QMap <QString, QWidget*> m_widgets;
-    QToolButton* m_addDeviceButton;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
