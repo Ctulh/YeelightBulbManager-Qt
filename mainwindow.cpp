@@ -8,7 +8,7 @@
 #include <QMimeData>
 #include <FileReader/FileReader.hpp>
 #include "Widgets/AddDeviceButton.hpp"
-#include "Widgets/AuthWidget.hpp"
+#include "Widgets/AddDeviceWidgets/AddDeviceWidget.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,7 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::addDevice() {
     static int number = 0;
-    auto authWidget = new AuthWidget(this);
+    auto authWidget = new AddDeviceWidget(this);
 
     //m_layout->addItem(authWidget);
 

@@ -1,0 +1,13 @@
+QPushButton {
+	min-height: 50px;
+	min-width: 100px;
+	background-color: white;
+	color: #5c6c75;
+	border-radius: 0px;
+	border-bottom: 5px solid white;
+}
+
+QPushButton::hover {
+	color: #1c2d38;
+	border-bottom: 5px solid #e8edeb;
+}

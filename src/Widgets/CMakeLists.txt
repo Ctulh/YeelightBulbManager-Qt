@@ -8,7 +8,12 @@ set(HEADERS ${INCLUDE_PATH}/SettingsButton.hpp
             ${INCLUDE_PATH}/ToggleButton.hpp
             ${INCLUDE_PATH}/FlowLayout.hpp
             ${INCLUDE_PATH}/AddDeviceButton.hpp
-            ${INCLUDE_PATH}/AuthWidget.hpp)
+            ${INCLUDE_PATH}/AddDeviceWidgets/AddDeviceWidget.hpp
+            ${INCLUDE_PATH}/AddDeviceWidgets/IpAddrLineEdit.hpp
+            ${INCLUDE_PATH}/AddDeviceWidgets/ManualAddWidget.hpp
+            ${INCLUDE_PATH}/AddDeviceWidgets/AuthAccountWidget.hpp
+            ${INCLUDE_PATH}/AddDeviceWidgets/DoneButton.hpp)
+
 
 set(SOURCES SettingsButton.cpp
             DeviceWidget.cpp
@@ -16,7 +21,11 @@ set(SOURCES SettingsButton.cpp
             ToggleButton.cpp
             FlowLayout.cpp
             AddDeviceButton.cpp
-            AuthWidget.cpp)
+            AddDeviceWidgets/DoneButton.cpp
+            AddDeviceWidgets/AddDeviceWidget.cpp
+            AddDeviceWidgets/IpAddrLineEdit.cpp
+            AddDeviceWidgets/ManualAddWidget.cpp
+            AddDeviceWidgets/AuthAccountWidget.cpp)
 
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)

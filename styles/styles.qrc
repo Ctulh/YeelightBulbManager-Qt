@@ -4,6 +4,11 @@
         <file>AddDeviceButton.css</file>
         <file>ToggleButton.css</file>
         <file>MainWindow.css</file>
-        <file>AuthWidget.css</file>
+        <file>AddDeviceStyles/AddDeviceWidget.css</file>
+        <file>AddDeviceStyles/DeviceNameLineEdit.css</file>
+        <file>AddDeviceStyles/DoneButton.css</file>
+        <file>AddDeviceStyles/IpAddrLineEdit.css</file>
+        <file>AddDeviceStyles/ManualButton.css</file>
+        <file>AddDeviceStyles/Labels.css</file>
     </qresource>
 </RCC>
