@@ -5,7 +5,7 @@
 #include <QValidator>
 #include <QRegExpValidator>
 
-IpAddrLineEdit::IpAddrLineEdit(QWidget* parent): QLineEdit(parent) {
+IpAddrLineEdit::IpAddrLineEdit(QWidget* parent): PrettyLineEdit(parent) {
     //auto ipAddrLineEdit = new QLineEdit;
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
 
@@ -15,8 +15,5 @@ IpAddrLineEdit::IpAddrLineEdit(QWidget* parent): QLineEdit(parent) {
                      + "\\." + ipRange + "$");
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
     this->setValidator(ipValidator);
-
-    this->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/IpAddrLineEdit.css").c_str());
-
     this->setCursorPosition(0);
 }

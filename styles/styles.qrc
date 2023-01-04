@@ -5,10 +5,14 @@
         <file>ToggleButton.css</file>
         <file>MainWindow.css</file>
         <file>AddDeviceStyles/AddDeviceWidget.css</file>
-        <file>AddDeviceStyles/DeviceNameLineEdit.css</file>
         <file>AddDeviceStyles/DoneButton.css</file>
-        <file>AddDeviceStyles/IpAddrLineEdit.css</file>
-        <file>AddDeviceStyles/ManualButton.css</file>
         <file>AddDeviceStyles/Labels.css</file>
+        <file>AddDeviceStyles/ChooseWayToAddDeviceButton.css</file>
+        <file>AddDeviceStyles/ChooseWayToAddDeviceButton_Selected.css</file>
+        <file>AddDeviceStyles/SpaceElementBetweenLineEdits.css</file>
+        <file>AddDeviceStyles/SpaceElementBeforeLineEdits.css</file>
+        <file>AddDeviceStyles/PrettyLineEdit.css</file>
+        <file>AddDeviceStyles/PrettyLineEdit_Focussed.css</file>
+        <file>AddDeviceStyles/PrettyLineEdit_Incorrect.css</file>
     </qresource>
 </RCC>

@@ -11,7 +11,10 @@
 #include "AddDeviceWidgets/IpAddrLineEdit.hpp"
 #include "AddDeviceWidgets/DoneButton.hpp"
 
-AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent), m_stackedWidget(new QStackedWidget) {
+AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
+                                                   m_stackedWidget(new QStackedWidget),
+                                                   m_manualAddBtn(new QPushButton("Manual")),
+                                                   m_authAccountBtn(new QPushButton("Auth account")) {
     this->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/AddDeviceWidget.css").c_str());
 
     this->setMinimumSize(400,400);
@@ -27,22 +30,20 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent), m_stackedWidg
     auto hBoxLayout = new QHBoxLayout;
 
 
-    auto manualAddBtn = new QPushButton("Manual");
-    auto authAccountBtn = new QPushButton("Auth account");
+    connect(m_manualAddBtn, &QPushButton::clicked, this, &AddDeviceWidget::onManualAddClicked);
+    connect(m_authAccountBtn, &QPushButton::clicked, this, &AddDeviceWidget::onAuthAccountClicked);
 
-    connect(manualAddBtn, &QPushButton::clicked, this, &AddDeviceWidget::onManualAddClicked);
-    connect(authAccountBtn, &QPushButton::clicked, this, &AddDeviceWidget::onAuthAccountClicked);
+    m_manualAddBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton_Selected.css").c_str());
+    m_authAccountBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton.css").c_str());
 
-    manualAddBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ManualButton.css").c_str());
-    authAccountBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ManualButton.css").c_str());
 
-    hBoxLayout->addWidget(manualAddBtn);
-    hBoxLayout->addWidget(authAccountBtn);
+    hBoxLayout->addWidget(m_manualAddBtn);
+    hBoxLayout->addWidget(m_authAccountBtn);
 
-    auto manualAddWidget = new ManualAddWidget;
+    m_manualAddWidget = new ManualAddWidget;
     auto authAccountWidget = new AuthAccountWidget;
 
-    m_stackedWidget->addWidget(manualAddWidget);
+    m_stackedWidget->addWidget(m_manualAddWidget);
     m_stackedWidget->addWidget(authAccountWidget);
 
     vBoxLayout->addLayout(hBoxLayout);
@@ -52,6 +53,7 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent), m_stackedWidg
     auto doneButtonWidget = new QWidget;
     auto doneButtonLayout = new QHBoxLayout(doneButtonWidget);
     auto doneButton = new DoneButton;
+    connect(doneButton, &QPushButton::clicked, this, &AddDeviceWidget::onDoneButtonClicked);
 
     doneButtonLayout->addWidget(doneButton);
 
@@ -60,13 +62,30 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent), m_stackedWidg
 }
 
 void AddDeviceWidget::onManualAddClicked(bool) {
+    m_authAccountBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton.css").c_str());
+    m_manualAddBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton_Selected.css").c_str());
     m_stackedWidget->setCurrentIndex(0);
 }
 
 void AddDeviceWidget::onAuthAccountClicked(bool) {
+    m_authAccountBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton_Selected.css").c_str());
+    m_manualAddBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton.css").c_str());
     m_stackedWidget->setCurrentIndex(1);
 }
 
+void AddDeviceWidget::onDoneButtonClicked(bool) {
+    auto ipAddr = m_manualAddWidget->getIpAddr();
+    auto deviceName = m_manualAddWidget->getDeviceName();
+    if(ipAddr.size() == 0) {
+        m_manualAddWidget->setIpAddrIncorrect();
+        return;
+    }
+    if(deviceName.size() == 0) {
+        m_manualAddWidget->setDeviceNameIncorrect();
+        return;
+    }
+    this->hide();
+}
 
 AddDeviceWidget::~AddDeviceWidget() {
     if(m_stackedWidget)

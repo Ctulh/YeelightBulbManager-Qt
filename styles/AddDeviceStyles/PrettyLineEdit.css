@@ -1,6 +1,7 @@
 QLineEdit {
-	border: 2px solid; 
 	color: black;
 	max-height: 50px;
 	min-height: 50px;
+	border: 1px solid #5c6c75;
+	padding-left: 1px;
 }
