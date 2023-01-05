@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        Subscriber.hpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -47,7 +48,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(SmartHouseManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets WidgetsLib)
+target_link_libraries(SmartHouseManager PRIVATE Qt${QT_VERSION_MAJOR}::Widgets WidgetsLib ViewModelLib ModelLib)
 
 target_include_directories(SmartHouseManager PUBLIC ${PROJECT_SOURCE_DIR}/include)
 

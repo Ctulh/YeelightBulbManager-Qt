@@ -8,13 +8,9 @@
 #include <QCursor>
 #include <QMimeData>
 
-DeviceWidget::DeviceWidget(QWidget *parent, int number): QWidget(parent), m_number(number) {
-    static int frameNumber = 0;
-
+DeviceWidget::DeviceWidget(QWidget *parent, QString deviceName): QWidget(parent), m_deviceName(deviceName) {
     this->setStyleSheet("border:none");
     this->setMinimumSize(QSize(200, 100));
-
-    //this->setObjectName((std::string("Frame_")+std::to_string(frameNumber++)).data());
 
 
     auto deviceButton = new DeviceButton(this);
@@ -23,26 +19,17 @@ DeviceWidget::DeviceWidget(QWidget *parent, int number): QWidget(parent), m_numb
     toggleButton->move(QPoint(200 - toggleButton->width() -5, 100 - toggleButton->height() - 5));
 }
 
-
-void DeviceWidget::mousePressEvent(QMouseEvent* event) {
-
-}
-
 void DeviceWidget::mouseMoveEvent(QMouseEvent* event) {
     if(event->buttons() == Qt::LeftButton) {
         this->setCursor(Qt::ClosedHandCursor);
         auto drag = new QDrag(this);
         auto mime = new QMimeData;
 
-        mime->setText(QString::number(m_number));
+        mime->setText(m_deviceName);
         drag->setMimeData(mime);
 
         auto dropAction = drag->exec(Qt::MoveAction);
         this->setCursor(Qt::ArrowCursor);
     }
-
-}
-
-void DeviceWidget::mouseReleaseEvent(QMouseEvent* event) {
 
 }

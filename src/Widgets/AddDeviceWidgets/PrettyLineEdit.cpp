@@ -8,16 +8,16 @@ PrettyLineEdit::PrettyLineEdit(QWidget *parent): QLineEdit(parent) {
     this->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/PrettyLineEdit.css").c_str());
 }
 
-void PrettyLineEdit::focusInEvent(QFocusEvent *e) {
-    if(e->reason() == Qt::MouseFocusReason) {
+void PrettyLineEdit::focusInEvent(QFocusEvent *event) {
+    if(event->reason() == Qt::MouseFocusReason) {
         this->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/PrettyLineEdit_Focussed.css").c_str());
     }
-    QLineEdit::focusInEvent(e);
+    QLineEdit::focusInEvent(event);
 }
 
-void PrettyLineEdit::focusOutEvent(QFocusEvent *e) {
-    if(e->reason() == Qt::MouseFocusReason) {
+void PrettyLineEdit::focusOutEvent(QFocusEvent *event) {
+    if(event->reason() == Qt::MouseFocusReason) {
         this->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/PrettyLineEdit.css").c_str());
     }
-    QLineEdit::focusOutEvent(e);
+    QLineEdit::focusOutEvent(event);
 }

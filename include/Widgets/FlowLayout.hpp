@@ -1,6 +1,4 @@
-#ifndef DEVICEWIDGET_HPP
-#define DEVICEWIDGET_HPP
-
+#pragma once
 
 #include <QLayout>
 #include <QStyle>
@@ -35,5 +33,3 @@ private:
     int m_hSpace;
     int m_vSpace;
 };
-
-#endif

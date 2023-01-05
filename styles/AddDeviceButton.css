@@ -1,11 +1,13 @@
 QToolButton{
-    qproperty-icon: url('/home/ctuh/SmartHouseManager/icons/add.png');
+    qproperty-icon: url('/home/ctuh/YeelightBulbManager-Qt/YeelightBulbManager-Qt-main/icons/add.png');
     qproperty-iconSize: 70px;
     background-size: contain;
     background: rgba(250,252,252,255); 
     outline: none;
     border-radius: 15px;
     border-style: outset;
+    min-height: 100px;
+    min-width: 200px;
 }
 QToolButton::menu-indicator { image: none; }
 QToolButton:hover { 

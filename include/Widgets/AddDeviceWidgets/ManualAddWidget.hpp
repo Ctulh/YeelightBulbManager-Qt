@@ -1,11 +1,7 @@
-
 #pragma once
 
 #include <QWidget>
 #include <QLineEdit>
-#include <QFrame>
-#include <QString>
-
 
 class ManualAddWidget: public QWidget {
     Q_OBJECT
@@ -20,7 +16,9 @@ public:
     void setIpAddrIncorrect();
     void setDeviceNameIncorrect();
 
+    void clearLineEdits();
+
 private:
-    QLineEdit* m_ipAddr;
-    QLineEdit* m_deviceName;
+    QLineEdit* m_ipAddrLineEdit;
+    QLineEdit* m_deviceNameLineEdit;
 };

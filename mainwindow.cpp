@@ -1,12 +1,14 @@
 #include "mainwindow.h"
-#include <QPushButton>
-#include <QStackedLayout>
-#include <QToolButton>
 #include "./ui_mainwindow.h"
-#include "Widgets/DeviceWidget.hpp"
-#include "Widgets/FlowLayout.hpp"
+
 #include <QMimeData>
-#include <FileReader/FileReader.hpp>
+#include <QPushButton>
+#include <QToolButton>
+#include <QStackedLayout>
+
+#include "Presenter/Presenter.hpp"
+#include "Widgets/DeviceWidget.hpp"
+#include "FileReader/FileReader.hpp"
 #include "Widgets/AddDeviceButton.hpp"
 #include "Widgets/AddDeviceWidgets/AddDeviceWidget.hpp"
 
@@ -16,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setStyleSheet(FileReader::getFileData(":/styles/MainWindow.css").c_str());
-
 
     auto addDeviceButton = new AddDeviceButton(this);
 
@@ -41,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->centralwidget->setLayout(m_layout);
 
+    m_addDeviceWidget = new AddDeviceWidget(this);
+    m_addDeviceWidget->hide();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -50,26 +55,11 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::addDevice() {
-    static int number = 0;
-    auto authWidget = new AddDeviceWidget(this);
+    int x = (width() - m_addDeviceWidget->width()) / 2;
+    int y = (height() - m_addDeviceWidget->height()) / 2;
 
-    //m_layout->addItem(authWidget);
-
-
-
-    int x = (width() - authWidget->width()) / 2;
-    int y = (height() - authWidget->height()) / 2;
-
-    //std::cerr << "width: " << width() << " height: " << height() << '\n';
-    //std::cerr << "width: " << authWidget->width() << " height: " << authWidget->height() << '\n';
-
-    authWidget->move(QPoint(x, y));
-
-    authWidget->show();
-
-    //auto it = m_widgets.insert(QString::number(number),new DeviceWidget(nullptr, number));
-    //m_layout->addWidget(it.value());
-    //number++;
+    m_addDeviceWidget->move(QPoint(x, y));
+    m_addDeviceWidget->show();
 }
 
 
@@ -82,12 +72,24 @@ void MainWindow::deleteLastDevice() {
     delete widget;
 }
 
+
+void MainWindow::update(const std::string &message) {
+    if(message == "new device") {
+        auto devices = Presenter::getInstance().getDevices();
+        for(auto device: devices) {
+            if(not m_widgets.contains(device->getDeviceName())) {
+                auto deviceWidget = new DeviceWidget(nullptr, QString(device->getDeviceName().c_str()));
+                auto it = m_widgets.insert(device->getDeviceName(), deviceWidget);
+                m_layout->addWidget(it.value());
+            }
+        }
+    }
+}
+
 void MainWindow::on_MainWindow_iconSizeChanged(const QSize &iconSize)
 {
 
 }
-
-
 
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
@@ -96,7 +98,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void MainWindow::dropEvent(QDropEvent *event) {
-    auto widgetToMove = m_widgets[event->mimeData()->text()];
+    auto widgetToMove = m_widgets[event->mimeData()->text().toStdString()];
     m_layout->removeWidget(widgetToMove);
 
 
@@ -105,14 +107,12 @@ void MainWindow::dropEvent(QDropEvent *event) {
     int widthOfWidgetsInTheWindow = (width() / oneElementWidth * oneElementWidth) + 1;
 
 
-    int columns = (200 + m_layout->horizontalSpacing()) * m_layout->count() / widthOfWidgetsInTheWindow;
-    int rows;
-    if(columns == 0)
-        rows = m_layout->count();
+    int columnsAmount = (200 + m_layout->horizontalSpacing()) * m_layout->count() / widthOfWidgetsInTheWindow;
+    int rowsAmount = 0;
+    if(columnsAmount == 0)
+        rowsAmount = m_layout->count();
     else
-        rows = m_layout->count() / columns;
-
-
+        rowsAmount = m_layout->count() / columnsAmount;
 
     auto pos = event->pos();
 
@@ -121,7 +121,7 @@ void MainWindow::dropEvent(QDropEvent *event) {
     int destinationRow = pos.y() / oneElementHeight;
 
 
-    int insertPos = destinationRow * rows + destinationColumn;
+    int insertPos = destinationRow * rowsAmount + destinationColumn;
     if(insertPos > m_layout->count()) {
         m_layout->addWidget(widgetToMove);
     }

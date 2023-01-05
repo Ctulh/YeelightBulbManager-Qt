@@ -1,5 +1,4 @@
-#ifndef SETTINGSBUTTON_H
-#define SETTINGSBUTTON_H
+#pragma once
 
 #include <QToolButton>
 
@@ -13,4 +12,3 @@ public slots:
     void onClick(bool);
 };
 
-#endif // SETTINGSBUTTON_H

@@ -2,14 +2,15 @@
 #include <QPushButton>
 #include "FileReader.hpp"
 #include <QGraphicsDropShadowEffect>
-#include <QStackedLayout>
-#include <QLineEdit>
 
+#include <QVBoxLayout>
 
 #include "AddDeviceWidgets/ManualAddWidget.hpp"
 #include "AddDeviceWidgets/AuthAccountWidget.hpp"
 #include "AddDeviceWidgets/IpAddrLineEdit.hpp"
 #include "AddDeviceWidgets/DoneButton.hpp"
+#include "Presenter/Presenter.hpp"
+#include <memory>
 
 AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
                                                    m_stackedWidget(new QStackedWidget),
@@ -19,15 +20,17 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
 
     this->setMinimumSize(400,400);
 
-    auto m_shadowEffect = new QGraphicsDropShadowEffect(this);
-    m_shadowEffect->setColor(QColor(0, 0, 0, 255 * 0.3));
-    m_shadowEffect->setXOffset(3);
-    m_shadowEffect->setYOffset(3);
-    m_shadowEffect->setBlurRadius(10);
-    setGraphicsEffect(m_shadowEffect);
+    {
+        auto m_shadowEffect = new QGraphicsDropShadowEffect(this);
+        m_shadowEffect->setColor(QColor(0, 0, 0, 255 * 0.3));
+        m_shadowEffect->setXOffset(3);
+        m_shadowEffect->setYOffset(3);
+        m_shadowEffect->setBlurRadius(10);
+        setGraphicsEffect(m_shadowEffect);
+    }
 
-    auto vBoxLayout = new QVBoxLayout(this);
-    auto hBoxLayout = new QHBoxLayout;
+    auto mainVerticalLayout = new QVBoxLayout(this);
+    auto tabLayout = new QHBoxLayout;
 
 
     connect(m_manualAddBtn, &QPushButton::clicked, this, &AddDeviceWidget::onManualAddClicked);
@@ -37,8 +40,8 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
     m_authAccountBtn->setStyleSheet(FileReader::getFileData(":/styles/AddDeviceStyles/ChooseWayToAddDeviceButton.css").c_str());
 
 
-    hBoxLayout->addWidget(m_manualAddBtn);
-    hBoxLayout->addWidget(m_authAccountBtn);
+    tabLayout->addWidget(m_manualAddBtn);
+    tabLayout->addWidget(m_authAccountBtn);
 
     m_manualAddWidget = new ManualAddWidget;
     auto authAccountWidget = new AuthAccountWidget;
@@ -46,8 +49,8 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
     m_stackedWidget->addWidget(m_manualAddWidget);
     m_stackedWidget->addWidget(authAccountWidget);
 
-    vBoxLayout->addLayout(hBoxLayout);
-    vBoxLayout->addWidget(m_stackedWidget);
+    mainVerticalLayout->addLayout(tabLayout);
+    mainVerticalLayout->addWidget(m_stackedWidget);
 
 
     auto doneButtonWidget = new QWidget;
@@ -58,7 +61,7 @@ AddDeviceWidget::AddDeviceWidget(QWidget* parent): QFrame(parent),
     doneButtonLayout->addWidget(doneButton);
 
 
-    vBoxLayout->addWidget(doneButtonWidget, Qt::AlignCenter);
+    mainVerticalLayout->addWidget(doneButtonWidget, Qt::AlignCenter);
 }
 
 void AddDeviceWidget::onManualAddClicked(bool) {
@@ -74,20 +77,21 @@ void AddDeviceWidget::onAuthAccountClicked(bool) {
 }
 
 void AddDeviceWidget::onDoneButtonClicked(bool) {
-    auto ipAddr = m_manualAddWidget->getIpAddr();
-    auto deviceName = m_manualAddWidget->getDeviceName();
-    if(ipAddr.size() == 0) {
+    auto ipAddrString = m_manualAddWidget->getIpAddr();
+    auto deviceNameString = m_manualAddWidget->getDeviceName();
+
+    if(ipAddrString.size() == 0) {
         m_manualAddWidget->setIpAddrIncorrect();
-        return;
     }
-    if(deviceName.size() == 0) {
+    if(deviceNameString.size() == 0) {
         m_manualAddWidget->setDeviceNameIncorrect();
         return;
     }
+
+    Presenter::getInstance().addDevice(ipAddrString.toStdString(), deviceNameString.toStdString());
+
+    m_manualAddWidget->clearLineEdits();
+
     this->hide();
 }
 
-AddDeviceWidget::~AddDeviceWidget() {
-    if(m_stackedWidget)
-        delete m_stackedWidget;
-}

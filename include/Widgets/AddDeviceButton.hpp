@@ -1,10 +1,6 @@
-
 #pragma once
 
-#include <functional>
-
 #include <QToolButton>
-
 
 class AddDeviceButton: public QToolButton {
     Q_OBJECT
@@ -13,5 +9,4 @@ public:
 
 public slots:
     void onClick(bool);
-    //void onTriggered(QAction*);
 };

@@ -1,20 +1,15 @@
-#ifndef DEVICEWIDGET_H
-#define DEVICEWIDGET_H
+#pragma once
 
-#include <QFrame>
+#include <QWidget>
 #include <QMouseEvent>
 
 class DeviceWidget: public QWidget {
     Q_OBJECT
 public:
-    explicit DeviceWidget(QWidget *parent = nullptr, int number = 0);
+    explicit DeviceWidget(QWidget *parent = nullptr, QString deviceName = "EmptyName");
 
 public:
-    void mousePressEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
-    void mouseReleaseEvent(QMouseEvent*) override;
 private:
-    int m_number;
+    QString m_deviceName;
 };
-
-#endif // DEVICEWIDGET_H

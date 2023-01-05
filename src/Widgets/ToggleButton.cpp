@@ -1,5 +1,6 @@
 #include "ToggleButton.hpp"
 #include "FileReader.hpp"
+#include "Presenter/Presenter.hpp"
 
 ToggleButton::ToggleButton(QWidget *parent): QPushButton(parent) {
     this->setStyleSheet(FileReader::getFileData(":/styles/ToggleButton.css").c_str());
@@ -18,8 +19,10 @@ ToggleButton::ToggleButton(QWidget *parent): QPushButton(parent) {
 
 void ToggleButton::onClick(bool) {
     QPixmap pixmap;
-    if(m_isToggled)
+    if(m_isToggled) {
        pixmap = QPixmap(":/icons/powerOff.png");
+       //ViewModel::getInstance().turnOffDevice();
+    }
     else
        pixmap = QPixmap(":/icons/powerOn.png");
 

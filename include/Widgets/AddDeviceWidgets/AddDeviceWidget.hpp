@@ -1,10 +1,9 @@
-
 #pragma once
 
 #include <QWidget>
-#include <QStackedWidget>
+#include <QFrame>
 #include <QPushButton>
-#include <QString>
+#include <QStackedWidget>
 
 #include "ManualAddWidget.hpp"
 
@@ -12,7 +11,6 @@ class AddDeviceWidget: public QFrame {
     Q_OBJECT
 public:
     AddDeviceWidget(QWidget* = nullptr);
-    ~AddDeviceWidget();
 public slots:
     void onManualAddClicked(bool);
     void onAuthAccountClicked(bool);
