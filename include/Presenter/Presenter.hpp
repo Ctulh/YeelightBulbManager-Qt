@@ -13,7 +13,7 @@
 class Presenter: public Publisher, public Singleton<Presenter> {
 public:
     void addDevice(std::string const& ipAddr, std::string const& deviceName);
-    void turnOffDevice(std::string const& ipAddr);
-    void turnOnDevice(std::string const& ipAddr);
+    void turnOffDevice(std::string const& deviceName);
+    void turnOnDevice(std::string const& deviceName);
     std::list<DevicePtr> getDevices() const;
 };

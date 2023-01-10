@@ -4,6 +4,7 @@
 #include "Device.hpp"
 
 
+
 void Model::addDevice(std::string const& ipAddr, std::string const& deviceName) {
     m_devices.push_back(std::make_shared<Device>(ipAddr, deviceName));
 }

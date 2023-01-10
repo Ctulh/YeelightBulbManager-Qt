@@ -21,6 +21,7 @@ private:
     std::string m_ipAddr;
     std::string m_deviceName;
     bool m_isActivated;
+    int id;
 };
 
 using DevicePtr = std::shared_ptr<Device>;

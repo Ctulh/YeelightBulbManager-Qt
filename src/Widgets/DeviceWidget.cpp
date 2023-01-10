@@ -2,11 +2,14 @@
 #include "SettingsButton.hpp"
 #include "DeviceButton.hpp"
 #include "ToggleButton.hpp"
+#include "Presenter/Presenter.hpp"
+
 #include <QPushButton>
 #include <QStackedLayout>
 #include <QDrag>
 #include <QCursor>
 #include <QMimeData>
+#include <string>
 
 DeviceWidget::DeviceWidget(QWidget *parent, QString deviceName): QWidget(parent), m_deviceName(deviceName) {
     this->setStyleSheet("border:none");
@@ -14,9 +17,18 @@ DeviceWidget::DeviceWidget(QWidget *parent, QString deviceName): QWidget(parent)
 
 
     auto deviceButton = new DeviceButton(this);
-    auto toggleButton = new ToggleButton(this);
+    m_toggleButton = new ToggleButton(this);
 
-    toggleButton->move(QPoint(200 - toggleButton->width() -5, 100 - toggleButton->height() - 5));
+    connect(m_toggleButton, &QPushButton::clicked, this, &DeviceWidget::onClicked);
+
+    m_toggleButton->move(QPoint(200 - m_toggleButton->width() -5, 5));
+}
+
+void DeviceWidget::onClicked(bool) {
+    if(m_toggleButton->isToggled())
+        Presenter::getInstance().turnOnDevice(std::string(m_deviceName.toStdString()));
+    else
+        Presenter::getInstance().turnOffDevice(std::string(m_deviceName.toStdString()));
 }
 
 void DeviceWidget::mouseMoveEvent(QMouseEvent* event) {

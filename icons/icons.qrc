@@ -4,5 +4,6 @@
         <file>powerOff.png</file>
         <file>powerOn.png</file>
         <file>add.png</file>
+        <file>bulb.png</file>
     </qresource>
 </RCC>
